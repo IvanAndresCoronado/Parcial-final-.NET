@@ -1,0 +1,80 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="ParcialFinal.MainWindow"
+        Title="Parcial Final - Inventario de Videojuegos"
+        Width="860" Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="18">
+
+        <!-- Título -->
+        <TextBlock Grid.Row="0"
+                   Text="Inventario de Videojuegos — C# .NET 8, Avalonia UI y SQLite (ADO.NET)"
+                   FontSize="18" FontWeight="Bold" Margin="0,0,0,12" />
+
+        <!-- Formulario de captura y botones CRUD -->
+        <Border Grid.Row="1" BorderBrush="#444" BorderThickness="1" CornerRadius="6" Padding="14" Margin="0,0,0,12">
+            <StackPanel Spacing="10">
+                <Grid ColumnDefinitions="*,*">
+                    <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,6,0">
+                        <TextBlock Text="Título *" />
+                        <TextBox x:Name="TxtTitulo" Watermark="Ej. Spider-Man 2" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="4" Margin="6,0,0,0">
+                        <TextBlock Text="Plataforma *" />
+                        <TextBox x:Name="TxtPlataforma" Watermark="Ej. PS5 / PC / Switch" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*,*">
+                    <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,6,0">
+                        <TextBlock Text="Género *" />
+                        <TextBox x:Name="TxtGenero" Watermark="Ej. Acción" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="4" Margin="6,0,6,0">
+                        <TextBlock Text="Precio *" />
+                        <TextBox x:Name="TxtPrecio" Watermark="Ej. 59.99" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Spacing="4" Margin="6,0,0,0">
+                        <TextBlock Text="Cantidad *" />
+                        <TextBox x:Name="TxtCantidad" Watermark="Ej. 4" />
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,6,0,0">
+                    <Button x:Name="BtnGuardar" Content="Guardar" Click="BtnGuardar_Click" />
+                    <Button x:Name="BtnActualizar" Content="Actualizar" Click="BtnActualizar_Click" />
+                    <Button x:Name="BtnEliminar" Content="Eliminar" Click="BtnEliminar_Click" />
+                    <Button x:Name="BtnLimpiar" Content="Limpiar" Click="BtnLimpiar_Click" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Listado de registros desde SQLite -->
+        <Border Grid.Row="2" BorderBrush="#444" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,12">
+            <DockPanel LastChildFill="True">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Videojuegos registrados en SQLite (selecciona uno para editar o eliminar):"
+                           Margin="0,0,0,8" FontWeight="SemiBold" />
+                <ListBox x:Name="LstVideojuegos" SelectionChanged="LstVideojuegos_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <TextBlock Text="{Binding Id, StringFormat='[#{0}]'}" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Titulo}" FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding Plataforma, StringFormat='— {0}'}" />
+                                <TextBlock Text="{Binding Genero, StringFormat='({0})'}" />
+                                <TextBlock Text="{Binding Precio, StringFormat='${0:0.00}'}" />
+                                <TextBlock Text="{Binding Cantidad, StringFormat='Stock: {0}'}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+        <!-- Barra de estado y notificaciones -->
+        <Border Grid.Row="3" Background="#222" CornerRadius="6" Padding="10">
+            <TextBlock x:Name="TxtEstado" Text="Listo para operar sobre SQLite." TextWrapping="Wrap" />
+        </Border>
+    </Grid>
+</Window>
